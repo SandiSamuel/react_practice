@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+static/Bundle.js
+static/Bundle.js.map
+static/Bundle.min.js
+static/Bundle.min.js.map
+*.pyc
+*.log
