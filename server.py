@@ -6,23 +6,36 @@ from todo import ToDo
 app = flask.Flask(__name__, static_url_path="/static")
 
 # List to keep track of all to-dos
-todos = []
+todos = [
+    ToDo("Make a nicer list of To-Dos"),
+    ToDo("Make it so you can add a To-Do"),
+    ToDo("Make it so you can complete a To-Do"),
+    ToDo("Make it so you can edit the text of a To-Do"),
+    ToDo("Make it so you can delete a To-Do")
+]
 
 
 @app.route("/")
 def index():
     """
-    Just returns the index.html file, which should just load the bundle.js and let that do all of the UI work.
+    Just returns the index.html file, which should just load the bundle.js and
+    let that do all of the UI work.
     """
     path = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__))))
     return flask.send_from_directory(path, 'index.html')
 
 
+# the "methods" argument limits only HTTP methods of the specified types for
+# this endpoint. Since we use the /todos for two different purposes, it's easy
+# enough to differentiate the traffic by using just the HTTP method.
 @app.route("/todos", methods=["GET"])
 def get_todos():
     """
     Returns the current list of To-Dos
     """
+    # This is a list comprehension; it allows you to generate a new list
+    # containing the result of the first expression as evaluated for each
+    # element in the list in the second expression.
     dicts = [t.toDict() for t in todos]
     return flask.jsonify(dicts)
 
